@@ -14,12 +14,10 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
-        // הגדרת מאזין ללחיצות בתפריט
         bottomNav.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
             int id = item.getItemId();
 
-            // בדיקה איזה כפתור נלחץ
             if (id == R.id.nav_happy) {
                 selectedFragment = new HappyFragment();
             } else if (id == R.id.nav_neutral) {
@@ -28,16 +26,16 @@ public class MainActivity extends AppCompatActivity {
                 selectedFragment = new SadFragment();
             }
 
-            // החלפת הפרגמנט בפועל
             if (selectedFragment != null) {
                 getSupportFragmentManager().beginTransaction()
+                        // הוספת הבונוס: אנימציית מעבר חלקה
+                        .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                         .replace(R.id.fragment_container, selectedFragment)
                         .commit();
             }
             return true;
         });
 
-        // הצגת פרגמנט ברירת מחדל בכניסה לאפליקציה
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new HappyFragment())
